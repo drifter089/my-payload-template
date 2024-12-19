@@ -14,8 +14,16 @@ import { Users } from './collections/Users'
 import { Footer } from './Footer/config'
 import { Header } from './Header/config'
 import { plugins } from './plugins'
+import { gcsStorage } from '@payloadcms/storage-gcs'
 import { defaultLexical } from '@/fields/defaultLexical'
 import { getServerSideURL } from './utilities/getURL'
+import { Projects } from './collections/Projects'
+import LandingPage from './globals/Page'
+import Platforms from './collections/Platforms/Platforms'
+import { Events } from './collections/CreateEvents'
+import Venues from './collections/Venues/Venues'
+import HorizontalCard from './collections/HorizontalCards/HorizontalCards'
+import VerticalCards from './collections/VerticalCards/VerticalCards'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -62,12 +70,34 @@ export default buildConfig({
   db: mongooseAdapter({
     url: process.env.DATABASE_URI || '',
   }),
-  collections: [Pages, Posts, Media, Categories, Users],
+  collections: [
+    Pages,
+    Posts,
+    Media,
+    Categories,
+    Users,
+    Projects,
+    Platforms,
+    Events,
+    Venues,
+    HorizontalCard,
+    VerticalCards,
+  ],
   cors: [getServerSideURL()].filter(Boolean),
-  globals: [Header, Footer],
+  globals: [Header, Footer, LandingPage],
   plugins: [
     ...plugins,
-    // storage-adapter-placeholder
+    gcsStorage({
+      collections: {
+        media: {
+          prefix: 'media',
+        },
+      },
+      options: {
+        credentials: JSON.parse(process.env.GCS_KEYFILE || '{}'),
+      },
+      bucket: process.env.GCS_BUCKET || '',
+    }),
   ],
   secret: process.env.PAYLOAD_SECRET,
   sharp,

@@ -1,0 +1,27 @@
+.custom-list{
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+      border: 1px solid var(--theme-elevation-150);
+      background: var(--theme-input-bg);
+      color: var(--theme-elevation-800);
+      border-radius: var(--style-radius-s);
+      box-shadow: 0 2px 2px -1px #0000001a;
+      font-size: 1rem;
+      font-family: var(--font-body);
+      -webkit-appearance: none;
+      transition-property: border,box-shadow,background-color;
+      transition-duration: .1s,.1s,.5s;
+      transition-timing-function: cubic-bezier(0,.2,.2,1);
+      padding: 8px 15px;
+
+  }
+.custom-list-item { 
+  // background: var(--theme-input-bg);
+  // color: var(--theme-elevation-800);
+  height: 30px;
+  line-height: 20px;
+  overflow: hidden;   
+  text-overflow: ellipsis;
+  white-space: nowrap ; 
+}

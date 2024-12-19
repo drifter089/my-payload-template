@@ -15,6 +15,7 @@ import { draftMode } from 'next/headers'
 
 import './globals.css'
 import { getServerSideURL } from '@/utilities/getURL'
+import LandingPageNavigation from '@/components/LandingPageNavigation'
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const { isEnabled } = await draftMode()
@@ -34,7 +35,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             }}
           />
 
-          <Header />
+          {/* <Header /> */}
+          <LandingPageNavigation />
           {children}
           <Footer />
         </Providers>

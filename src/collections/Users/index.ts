@@ -1,6 +1,7 @@
 import type { CollectionConfig } from 'payload'
 
 import { authenticated } from '../../access/authenticated'
+import { anyone } from '@/access/anyone'
 
 export const Users: CollectionConfig = {
   slug: 'users',
@@ -8,7 +9,7 @@ export const Users: CollectionConfig = {
     admin: authenticated,
     create: authenticated,
     delete: authenticated,
-    read: authenticated,
+    read: anyone,
     update: authenticated,
   },
   admin: {
