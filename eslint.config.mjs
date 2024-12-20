@@ -28,6 +28,7 @@ const eslintConfig = [
           caughtErrorsIgnorePattern: '^(_|ignore)',
         },
       ],
+      'no-var': 0,
     },
   },
 ]

@@ -1,7 +1,5 @@
 'use client'
 import type { TextFieldClientComponent } from 'payload'
-import classNames from 'classnames'
-import { useField, Button, TextInput, FieldLabel, useFormFields, useForm } from '@payloadcms/ui'
 import React, { useState } from 'react'
 import {
   APIProvider,
@@ -16,9 +14,7 @@ import './index.scss'
 
 import MapHandler from './map-handler'
 
-declare global {
-  var GOOGLE_MAPS_API_KEY: string | undefined
-}
+let GOOGLE_MAPS_API_KEY: string | undefined
 
 export type AutocompleteMode = { id: string; label: string }
 
@@ -27,10 +23,7 @@ export const CustomTextFieldClient: TextFieldClientComponent = ({ field, path })
 
   console.log('selectedPlace', selectedPlace)
 
-  const { value, setValue } = useField<string>({ path: path || field.name })
-
-  const API_KEY =
-    (process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY as string) ?? globalThis.GOOGLE_MAPS_API_KEY
+  const API_KEY = (process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY as string) ?? GOOGLE_MAPS_API_KEY
 
   return (
     <>
