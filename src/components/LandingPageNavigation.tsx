@@ -1,8 +1,13 @@
-import { NavigationMenu, NavigationMenuList } from '@/components/ui/navigation-menu'
+import {
+  NavigationMenu,
+  NavigationMenuItem,
+  NavigationMenuList,
+} from '@/components/ui/navigation-menu'
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
 import NavBarComponent from '@/components/NavBarComponent'
 import Image from 'next/image'
+import { ThemeSelector } from '@/providers/Theme/ThemeSelector'
 
 const payload = await getPayload({ config: configPromise })
 
@@ -23,8 +28,8 @@ const LandingPageNavigation = () => {
             src={landingPage.image.url}
             alt={landingPage.image.alt || 'Site logo'}
             className="h-full object-contain"
-            width={248}
-            height={77}
+            width={100}
+            height={40}
           />
         </div>
       )}
@@ -40,6 +45,9 @@ const LandingPageNavigation = () => {
           }
           return null
         })}
+        {/* <NavigationMenuItem>
+          <ThemeSelector />
+        </NavigationMenuItem> */}
       </NavigationMenuList>
     </NavigationMenu>
   )

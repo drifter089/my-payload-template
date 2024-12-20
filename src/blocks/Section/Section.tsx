@@ -40,7 +40,7 @@ const Section: React.FC<PageSection> = async ({
   return (
     <div
       id={blockName || ''}
-      className={`${backgroundColor === 'secondary' ? 'bg-secondary' : 'bg-background'} max-w[100vw] w-[100vw] overflow-hidden mx-auto pb-[8rem]`}
+      className={`${backgroundColor === 'secondary' ? 'bg-secondary' : 'bg-background'} w-full max-w-[100vw] overflow-x-hidden`}
     >
       <TextSection heading={heading} paragraph={subheading} backgroundColor={backgroundColor} />
 
@@ -82,7 +82,7 @@ const MakeCarousel = (data: any[], cardType: string) => {
   return (
     <>
       <Carousel
-        className="w-[100%] max-w-[100vw] overflow-hidden relative mt-12 mb-8"
+        className="w-[100%] max-w-[100vw] overflow-hidden relative mt-4 md:mt-8 2xl:mt-16 mb-6 md:mb-12 2xl:mb-20"
         opts={{
           align: 'start',
           loop: true,
@@ -144,7 +144,7 @@ const MakeCarousel = (data: any[], cardType: string) => {
 
 const MakeFlex = (data: any[], cardType: string) => {
   return (
-    <div className="max-w-[100vw] w-[100vw] flex flex-wrap default-x-padding justify-center items-center align-middle gap-5 overflow-hidden mt-20 mb-10 ">
+    <div className="max-w-[100vw] w-[100vw] flex flex-wrap default-x-padding justify-center items-center align-middle gap-5 overflow-hidden mt-4 md:mt-8 2xl:mt-16 mb-6 md:mb-12 2xl:mb-20">
       {data.map((block) => {
         switch (cardType) {
           case 'horizontal':

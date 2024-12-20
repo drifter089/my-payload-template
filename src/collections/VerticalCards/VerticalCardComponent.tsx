@@ -2,6 +2,7 @@ import React from 'react'
 import type { Verticalcard } from '@/payload-types'
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
+import { Card } from '@/components/ui/card'
 
 const VerticalCardComponent: React.FC<Verticalcard> = ({ image, content, headline, date }) => {
   const formattedDate = date
@@ -14,7 +15,7 @@ const VerticalCardComponent: React.FC<Verticalcard> = ({ image, content, headlin
   const Newcontent = (content || '').split(' ').slice(0, 15).join(' ')
 
   return (
-    <div className="min-w-[25rem] md:w-[25rem] rounded-[2.5rem] overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col bg-background">
+    <Card className="min-w-[25rem] md:w-[25rem] rounded-radius overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col">
       <div className="relative w-full h-[15rem] overflow-hidden">
         {typeof image !== 'string' && image?.url && (
           <Image src={image.url} alt={image.alt || 'Card image'} fill className="object-cover" />
@@ -39,7 +40,7 @@ const VerticalCardComponent: React.FC<Verticalcard> = ({ image, content, headlin
         <p className="text-subparagraph">{Newcontent}</p>
         <Button variant="secondary">more info</Button>
       </div>
-    </div>
+    </Card>
   )
 }
 
