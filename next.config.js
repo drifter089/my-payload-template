@@ -33,7 +33,7 @@ const nextConfig = {
     // !! WARN !!
     ignoreBuildErrors: true,
   },
-  reactStrictMode: false,
+  reactStrictMode: true,
   redirects,
 }
 
