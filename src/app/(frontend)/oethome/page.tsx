@@ -64,18 +64,6 @@ const page = async () => {
           }
           return null
         })}
-      {/* {eventpages.docs.map((event) => {
-        if (event.form && typeof event.form !== 'string') {
-          return (
-            <FormBlock
-              key={event.id}
-              form={event.form}
-              // enableIntro={event.enableIntro}
-              // introContent={event.introContent}
-            />
-          )
-        }
-      })} */}
     </>
   )
 }

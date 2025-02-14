@@ -1,53 +1,25 @@
-import type { Metadata } from 'next'
-
-import { PayloadRedirects } from '@/components/PayloadRedirects'
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
 import { draftMode } from 'next/headers'
 import React, { cache } from 'react'
-import RichText from '@/components/RichText'
 
-import type { Post } from '@/payload-types'
-
-import { PostHero } from '@/heros/PostHero'
-import { generateMeta } from '@/utilities/generateMeta'
 import PageClient from '../../projects/[slug]/page.client'
+import { Project as ProjectType } from '@/payload-types'
+import { PayloadRedirects } from '@/components/PayloadRedirects'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
 
-export async function generateStaticParams() {
-  const payload = await getPayload({ config: configPromise })
-  const posts = await payload.find({
-    collection: 'projects',
-    draft: false,
-    limit: 1000,
-    overrideAccess: false,
-    pagination: false,
-    select: {
-      slug: true,
-    },
-  })
-
-  const params = posts.docs.map(({ slug }) => {
-    return { slug }
-  })
-
-  return params
-}
-
-type Args = {
-  params: Promise<{
-    slug?: string
-  }>
-}
-
-export default async function Post({ params: paramsPromise }: Args) {
+export default async function Project({ params }: { params: Promise<{ slug: string }> }) {
   const { isEnabled: draft } = await draftMode()
-  const { slug = '' } = await paramsPromise
+  const { slug } = await params
   const url = '/projects/' + slug
-  const post = await queryPostBySlug({ slug })
-  console.log('post', post)
 
-  if (!post) return <PayloadRedirects url={url} />
+  const project: ProjectType | null = await queryPageBySlug({
+    slug,
+  })
+
+  // if (!post) return <PayloadRedirects url={url} />
+  console.log('project', project)
+  console.log('url', url)
 
   return (
     <article className="pt-16 pb-16">
@@ -58,46 +30,40 @@ export default async function Post({ params: paramsPromise }: Args) {
 
       {draft && <LivePreviewListener />}
 
-      <PostHero post={post} />
-
-      <div className="flex flex-col items-center gap-4 pt-8">
-        <div className="container">
-          <RichText
-            className="
-            max-w-[48rem] mx-auto [&_*]:text-cyan-700 text-4xl"
-            data={post.content}
-            enableGutter={false}
-          />
-        </div>
-      </div>
+      <h1 className="text-8xl font-bold py-8">{project?.title}</h1>
     </article>
   )
 }
 
-export async function generateMetadata({ params: paramsPromise }: Args): Promise<Metadata> {
-  const { slug = '' } = await paramsPromise
-  const post = await queryPostBySlug({ slug })
-
-  return generateMeta({ doc: post })
-}
-
-const queryPostBySlug = cache(async ({ slug }: { slug: string }) => {
-  const { isEnabled: draft } = await draftMode()
+const queryPageBySlug = cache(async ({ slug }: { slug: string }) => {
+  const parsedSlug = decodeURIComponent(slug)
 
   const payload = await getPayload({ config: configPromise })
 
   const result = await payload.find({
     collection: 'projects',
-    draft,
-    limit: 1,
-    overrideAccess: draft,
-    pagination: false,
+    limit: 1000,
     where: {
       slug: {
-        equals: slug,
+        equals: parsedSlug,
       },
     },
   })
 
   return result.docs?.[0] || null
 })
+
+export async function generateStaticParams() {
+  const payload = await getPayload({ config: configPromise })
+  const pages = await payload.find({
+    collection: 'posts',
+    draft: false,
+    limit: 1000,
+  })
+
+  return (
+    pages.docs?.map(({ slug }) => ({
+      slug: slug,
+    })) || []
+  )
+}
