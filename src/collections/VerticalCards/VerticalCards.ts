@@ -35,7 +35,12 @@ const VerticalCards: CollectionConfig = {
         // readOnly: true,
         position: 'sidebar',
       },
-    }
+    },
+    {
+      name: 'slug',
+      type: 'text',
+      hidden: true,
+    },
   ],
 }
 

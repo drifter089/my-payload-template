@@ -82,7 +82,7 @@ const MakeCarousel = (data: any[], cardType: string) => {
   return (
     <>
       <Carousel
-        className="w-[100%] max-w-[100vw] overflow-hidden relative mt-4 md:mt-8 2xl:mt-16 mb-6 md:mb-12 2xl:mb-20"
+        className="w-[100%] max-w-[100vw] relative mt-4 md:mt-8 2xl:mt-16 mb-6 md:mb-12 2xl:mb-20 px-8"
         opts={{
           align: 'start',
           loop: true,
@@ -129,14 +129,8 @@ const MakeCarousel = (data: any[], cardType: string) => {
             }
           })}
         </CarouselContent>
-        <CarouselPrevious
-          className="absolute bottom-0 left-8 mb-4 transform -translate-y-1"
-          style={{ top: '50%' }}
-        />
-        <CarouselNext
-          className="absolute bottom-0 right-8 mb-4 transform -translate-y-1"
-          style={{ top: '50%' }}
-        />
+        <CarouselPrevious className="absolute left-1" />
+        <CarouselNext className="absolute right-1" />
       </Carousel>
     </>
   )

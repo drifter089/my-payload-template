@@ -644,23 +644,11 @@ export interface Project {
   id: string;
   title: string;
   heroImage?: (string | null) | Media;
-  content: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
+  subtitle?: string | null;
+  content?: string | null;
   relatedProjects?: (string | Project)[] | null;
   categories?: (string | Category)[] | null;
+  team?: (string | User)[] | null;
   meta?: {
     title?: string | null;
     image?: (string | null) | Media;
@@ -750,6 +738,7 @@ export interface Verticalcard {
   headline: string;
   content: string;
   date?: string | null;
+  slug?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -1231,9 +1220,11 @@ export interface UsersSelect<T extends boolean = true> {
 export interface ProjectsSelect<T extends boolean = true> {
   title?: T;
   heroImage?: T;
+  subtitle?: T;
   content?: T;
   relatedProjects?: T;
   categories?: T;
+  team?: T;
   meta?:
     | T
     | {
@@ -1320,6 +1311,7 @@ export interface VerticalcardsSelect<T extends boolean = true> {
   headline?: T;
   content?: T;
   date?: T;
+  slug?: T;
   updatedAt?: T;
   createdAt?: T;
 }

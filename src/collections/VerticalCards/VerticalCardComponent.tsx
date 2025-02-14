@@ -3,8 +3,15 @@ import type { Verticalcard } from '@/payload-types'
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
+import Link from 'next/link'
 
-const VerticalCardComponent: React.FC<Verticalcard> = ({ image, content, headline, date }) => {
+const VerticalCardComponent: React.FC<Partial<Verticalcard>> = ({
+  image,
+  content,
+  headline,
+  date,
+  slug,
+}) => {
   const formattedDate = date
     ? new Date(date).toLocaleDateString('en-GB', {
         day: 'numeric',
@@ -12,7 +19,7 @@ const VerticalCardComponent: React.FC<Verticalcard> = ({ image, content, headlin
         year: 'numeric',
       })
     : ''
-  const Newcontent = (content || '').split(' ').slice(0, 15).join(' ')
+  // const Newcontent = (content || '').split(' ').slice(0, 15).join(' ')
 
   return (
     <Card className="min-w-[25rem] md:w-[25rem] rounded-radius overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col">
@@ -37,8 +44,14 @@ const VerticalCardComponent: React.FC<Verticalcard> = ({ image, content, headlin
           <span className="text-subparagraph-muted inline">{formattedDate}</span>
         </div>
         <h2 className="text-title-bold">{headline}</h2>
-        <p className="text-subparagraph">{Newcontent}</p>
-        <Button variant="secondary">more info</Button>
+        <p className="text-subparagraph">{content}</p>
+        {slug ? (
+          <Link href={`${slug}`}>
+            <Button variant="secondary">more info</Button>
+          </Link>
+        ) : (
+          <Button variant="secondary">more info</Button>
+        )}
       </div>
     </Card>
   )
