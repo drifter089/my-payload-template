@@ -21,6 +21,7 @@ export const Events: CollectionConfig = {
     update: authenticated,
   },
   admin: {
+    hidden: true,
     defaultColumns: ['title', 'generatedLink', 'seats'],
     useAsTitle: 'title',
   },
