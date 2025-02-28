@@ -39,14 +39,14 @@ const page = async () => {
                 blockName={sectionId}
               />
             )
-          } else if (block.blockType === 'Social') {
-            return (
-              <Socials
-                key={block.id}
-                backgroundColor={block.backgroundColor || 'primary'}
-                blockName={sectionId}
-              />
-            )
+            // } else if (block.blockType === 'Social') {
+            //   return (
+            //     <Socials
+            //       key={block.id}
+            //       backgroundColor={block.backgroundColor || 'primary'}
+            //       blockName={sectionId}
+            //     />
+            //   )
           } else if (block.blockType === 'section') {
             return (
               <Section

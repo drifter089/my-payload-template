@@ -5,32 +5,13 @@ export const Section: Block = {
   interfaceName: 'PageSection',
   fields: [
     {
-      name: 'subheading',
-      type: 'textarea',
-      required: true,
-    },
-    {
-      name: 'heading',
-      type: 'text',
-      required: true,
-    },
-    {
-      name: 'backgroundColor',
-      type: 'select',
-      defaultValue: 'primary',
-      options: [
-        { label: 'Primary', value: 'primary' },
-        { label: 'Secondary', value: 'secondary' },
-      ],
-      required: true,
-    },
-    {
       name: 'component',
       type: 'select',
       defaultValue: 'carousel',
       options: [
         { label: 'Carousel', value: 'carousel' },
-        { label: 'Basic', value: 'basic' },
+        { label: 'Flex', value: 'basic' },
+        { label: 'Grid', value: 'grid' },
       ],
       required: true,
     },
@@ -48,6 +29,10 @@ export const Section: Block = {
         {
           label: 'Outputs',
           value: 'pastevents',
+        },
+        {
+          label: 'Platforms',
+          value: 'platforms',
         },
       ],
       required: true,
