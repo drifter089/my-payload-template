@@ -13,17 +13,15 @@ import {
 } from '@/components/ui/carousel'
 import TextSection from '@/components/headingSection'
 import HorizantalCardComponent from '@/collections/HorizontalCards/HorizontalCardComponent'
+import PlatformIconLink from '@/collections/Platforms/PlatformIconLink'
 
 const Section: React.FC<PageSection> = async ({
-  backgroundColor,
   component,
   cards,
   id,
   blockName,
   blockType,
   limit,
-  subheading,
-  heading,
 }) => {
   const payload = await getPayload({ config: configPromise })
 
@@ -37,12 +35,15 @@ const Section: React.FC<PageSection> = async ({
     limit: limit,
   })
 
+  const platforms = await payload.find({
+    collection: 'platforms',
+    draft: false,
+    limit: 1000,
+  })
+
   return (
-    <div
-      id={blockName || ''}
-      className={`${backgroundColor === 'secondary' ? 'bg-secondary' : 'bg-background'} w-full max-w-[100vw] overflow-x-hidden`}
-    >
-      <TextSection heading={heading} paragraph={subheading} backgroundColor={backgroundColor} />
+    <div id={blockName || ''} className={`bg-background w-full max-w-[100vw] overflow-x-hidden`}>
+      <TextSection heading={component} paragraph={cards} />
 
       {(() => {
         switch (component) {
@@ -53,6 +54,9 @@ const Section: React.FC<PageSection> = async ({
 
               case 'verticalcard':
                 return MakeCarousel(eventsData.docs, 'vertical')
+
+              case 'platforms':
+                return MakeCarousel(platforms.docs, 'platform')
 
               default:
                 return null
@@ -65,6 +69,23 @@ const Section: React.FC<PageSection> = async ({
 
               case 'verticalcard':
                 return MakeFlex(eventsData.docs, 'vertical')
+
+              case 'platforms':
+                return MakeFlex(platforms.docs, 'platform')
+
+              default:
+                return null
+            }
+          case 'grid':
+            switch (cards) {
+              case 'horizontalcards':
+                return MakeGrid(collectionsData.docs, 'horizontal')
+
+              case 'verticalcard':
+                return MakeGrid(eventsData.docs, 'vertical')
+
+              case 'platforms':
+                return MakeGrid(platforms.docs, 'platform')
 
               default:
                 return null
@@ -124,6 +145,15 @@ const MakeCarousel = (data: any[], cardType: string) => {
                     </CarouselItem>
                   </div>
                 )
+              case 'platform':
+                return (
+                  <div className="p-1">
+                    <CarouselItem key={block.id} className="pl-4 md:basis-1/2 lg:basis-1/3">
+                      <PlatformIconLink {...block} />
+                    </CarouselItem>
+                  </div>
+                )
+
               default:
                 return null
             }
@@ -166,6 +196,48 @@ const MakeFlex = (data: any[], cardType: string) => {
                 createdAt={block.createdAt}
               />
             )
+          case 'platform':
+            return <PlatformIconLink {...block} />
+          default:
+            return null
+        }
+      })}
+    </div>
+  )
+}
+
+const MakeGrid = (data: any[], cardType: string) => {
+  return (
+    <div className="max-w-[100vw] w-[100vw] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 px-4 mt-4 md:mt-8 2xl:mt-16 mb-6 md:mb-12 2xl:mb-20">
+      {data.map((block) => {
+        switch (cardType) {
+          case 'horizontal':
+            return (
+              <HorizantalCardComponent
+                key={block.id}
+                heading={block.heading}
+                content={block.content}
+                image={block.image}
+                id={block.id}
+                updatedAt={block.updatedAt}
+                createdAt={block.createdAt}
+              />
+            )
+          case 'vertical':
+            return (
+              <VerticalCardComponent
+                key={block.id}
+                image={block.image}
+                date={block.publishedAt}
+                headline={block.title}
+                content={block.content}
+                id={block.id}
+                updatedAt={block.updatedAt}
+                createdAt={block.createdAt}
+              />
+            )
+          case 'platform':
+            return <PlatformIconLink {...block} />
           default:
             return null
         }
